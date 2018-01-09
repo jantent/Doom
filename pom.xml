@@ -25,6 +25,20 @@
             <artifactId>netty-all</artifactId>
             <version>4.0.33.Final</version>
         </dependency>
+
+        <dependency>
+
+            <groupId>mysql</groupId>
+
+            <artifactId>mysql-connector-java</artifactId>
+
+            <version>5.1.35</version>
+
+            <scope>runtime</scope>
+
+        </dependency>
+
     </dependencies>
+
 
 </project>

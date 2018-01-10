@@ -35,7 +35,7 @@ public class HttpClient {
 			
 			ChannelFuture f = b.connect(host, port).sync();
 			
-			URI uri = new URI("http://192.168.1.107:8080");
+			URI uri = new URI("http://www.koal.com");
 			String msg = "Are you ok";
 			DefaultFullHttpRequest request = new DefaultFullHttpRequest(HttpVersion.HTTP_1_1, HttpMethod.GET,
 					uri.toASCIIString(), Unpooled.wrappedBuffer(msg.getBytes()));

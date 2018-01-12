@@ -11,9 +11,41 @@
          #{id}其中的id标识接入输入的参数，参数名称为id,如果输入参数为简单类型，#{}中的参数名可以任意
          resultType 指定输出结果的所映射的java对象类型
     -->
-
-
     <select id="findUserById" parameterType="int" resultType="mybatis.dao.User">
         SELECT * FROM USER WHERE id=#{id}
     </select>
+
+    <!--
+    根据用户姓名模糊查询用户信息，可能返回多条
+    resultType：制定单条记录所映射的java对象
+    ${}：表示拼接sql字符串，会有sql注入的风险
+    -->
+    <select id="findUserByName" parameterType="java.lang.String" resultType="mybatis.dao.User">
+        SELECT * FROM USER WHERE username LIKE '%${value}%'
+    </select>
+
+    <!--
+    parameterType:指定输入参数类型是pojo
+    #{}中指定pojo的属性名，接受到pojo对象的属性值
+    -->
+    <insert id="insertUser" parameterType="mybatis.dao.User">
+        INSERT INTO USER(username,birthday,sex,address) VALUE (#{username},#{birthday},#{sex},#{address})
+    </insert>
+
+    <!--
+    插入一条数据并返回主键ID
+    -->
+    <insert id="insertUserReturnId" parameterType="mybatis.dao.User">
+        <!--
+        将插入数据的主键返回，返回到user对象中
+        SELECT LAST_INSERT_ID():得到刚insert进去记录的主键值，只适用于主键自增
+        keyProperty:将查询到主键值设置到parameterType指定的对象的那个属性
+        order:SELECT LAST_INSERT_ID()执行顺序，相对于insert语句来说他的执行顺序
+        resultType:指定LAST_INSERT_ID()的返回结果类型
+        -->
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO USER(username,birthday,sex,address) VALUE (#{username},#{birthday},#{sex},#{address})
+    </insert>
 </mapper>

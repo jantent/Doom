@@ -14,4 +14,9 @@
             </dataSource>
         </environment>
     </environments>
+
+    <!-- 加载映射文件-->
+    <mappers>
+        <mapper resource="mybatis/mapper/UserDao.xml"/>
+    </mappers>
 </configuration>

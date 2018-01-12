@@ -21,5 +21,11 @@ public class FileUtil {
         output.write(content);
         output.close();
     }
-
+    public static void main(String[] args) throws Exception {
+        String test = "F:/zip/download/archived";
+        File testDir = new File(test);
+        if (!testDir.exists()){
+            testDir.mkdirs();
+        }
+    }
 }

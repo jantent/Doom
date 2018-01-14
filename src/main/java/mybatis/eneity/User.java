@@ -1,4 +1,4 @@
-package mybatis.dao;
+package mybatis.eneity;
 
 import java.util.Date;
 

@@ -1,6 +1,8 @@
 package mybatis.dao;
 
 import mybatis.eneity.User;
+import mybatis.eneity.UserCustom;
+import mybatis.eneity.UserQueryVo;
 
 import java.util.List;
 
@@ -12,6 +14,7 @@ public interface UserDao {
      * 3.Dao.java接口中的方法输入类型和mapper.xml中的statement的paramType指定的类型一致
      * 4.Dao.java接口中的方法返回类型与mapper.xml中的statement的resultType指定
      */
+    public List<UserCustom> findUserList(UserQueryVo userQueryVo) throws Exception;
 
     public User findUserById(int id) throws Exception;
 

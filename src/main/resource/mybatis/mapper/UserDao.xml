@@ -11,16 +11,21 @@
          #{id}其中的id标识接入输入的参数，参数名称为id,如果输入参数为简单类型，#{}中的参数名可以任意
          resultType 指定输出结果的所映射的java对象类型
     -->
-    <select id="findUserById" parameterType="int" resultType="mybatis.eneity.User">
+    <select id="findUserById" parameterType="int" resultType="user">
         SELECT * FROM USER WHERE id=#{id}
     </select>
 
+    
+    <select id="findUserList" parameterType="UserQueryVo" resultType="UserCustom">
+        SELECT * FROM user WHERE user.sex = #{userCustom.sex} AND user.username LIKE '%${userCustom.username}%'
+    </select>
+    
     <!--
     根据用户姓名模糊查询用户信息，可能返回多条
     resultType：制定单条记录所映射的java对象
     ${}：表示拼接sql字符串，会有sql注入的风险
     -->
-    <select id="findUserByName" parameterType="java.lang.String" resultType="mybatis.eneity.User">
+    <select id="findUserByName" parameterType="java.lang.String" resultType="User">
         SELECT * FROM USER WHERE username LIKE '%${value}%'
     </select>
 

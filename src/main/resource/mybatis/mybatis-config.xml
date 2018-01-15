@@ -5,10 +5,17 @@
 <configuration>
 
     <!-- 加载属性文件 -->
-    <properties resource="mybatis/jdbc.properties">
-
-    </properties>
-
+    <properties resource="mybatis/jdbc.properties"></properties>
+    <typeAliases>
+        <!--
+        使用别名
+        <typeAlias type="mybatis.eneity.User" alias="user"/>
+        -->
+        <!-- 批量别名定义
+        指定包名，mybatis自动扫描包中的pojo类，自动定义别名，别名就是类名
+        -->
+        <package name="mybatis.eneity"/>
+    </typeAliases>
     <environments default="development">
         <environment id="development">
             <transactionManager type="JDBC"/>

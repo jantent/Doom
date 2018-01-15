@@ -2,6 +2,8 @@ package mybatis.dao;
 
 import mybatis.eneity.User;
 
+import java.util.List;
+
 public interface UserDao {
     /**
      * mapper代理开发规范
@@ -12,6 +14,8 @@ public interface UserDao {
      */
 
     public User findUserById(int id) throws Exception;
+
+    public List<User> findUserByName(String name) throws Exception;
 
     public void insertUser(User user) throws Exception;
 

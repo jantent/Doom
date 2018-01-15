@@ -3,14 +3,20 @@
                 PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
                 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+
+    <!-- 加载属性文件 -->
+    <properties resource="mybatis/jdbc.properties">
+
+    </properties>
+
     <environments default="development">
         <environment id="development">
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
-                <property name="driver" value="com.mysql.jdbc.Driver"/>
-                <property name="url" value="jdbc:mysql://127.0.0.1:3306/mybatis?characterEncoding=utf-8"/>
-                <property name="username" value="root"/>
-                <property name="password" value="123456"/>
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
             </dataSource>
         </environment>
     </environments>
@@ -20,3 +26,15 @@
         <mapper resource="mybatis/mapper/UserDao.xml"/>
     </mappers>
 </configuration>
+
+<!--
+properties
+
+将数据库的连接参数单独配置在db.properties中，只需要在sqlMapConfig.xml中加载db.peoperties的属性值
+在sqlMapConfig.xml中就不需要对数据库连接参数硬编码
+将数据库连接参数只配置在db.properties中，原因：方便对参数统一管理，方便其他xml调用
+建议：
+不要在properties元素体内添加任何属性值，只将属性值定义在properties文件中
+在properties文件中定义属性名要有一定的特殊性，如：xxxx.xxx
+
+-->

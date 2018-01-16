@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="springBoot.domain.dao.AdminDao">
+    <insert id="insertAdminReturnId" parameterType="springBoot.domain.bean.Admin">
+        <selectKey keyProperty="adminId" order="AFTER" resultType="int">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO ADMIN(adminAccount,adminPassword,address) VALUE (#{adminAccount},#{adminPassword},#{address})
+    </insert>
+    
+    <select id="findAdminById" parameterType="int" resultType="springBoot.domain.bean.Admin">
+        SELECT * FROM ADMIN WHERE adminId=#{value};
+    </select>
+</mapper>

@@ -1,5 +1,6 @@
 package springBoot;
 
+import com.alibaba.druid.pool.DruidDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.log4j.Logger;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -19,15 +20,15 @@ import javax.sql.DataSource;
 @SpringBootApplication
 @ComponentScan
 @MapperScan("springboot.domain.eneity")
-public class HelloWorld {
+public class CoreApplication {
 
-    private static Logger logger = Logger.getLogger(HelloWorld.class);
+    private static Logger logger = Logger.getLogger(CoreApplication.class);
 
     //dataSource配置
     @Bean
     @ConfigurationProperties(prefix = "spring.datasource")
     public DataSource dataSource() {
-        return new org.apache.tomcat.jdbc.pool.DataSource();
+        return new DruidDataSource();
     }
 
     // 提供SQLSession
@@ -35,12 +36,12 @@ public class HelloWorld {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource());
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath:/mybatis/mapper/*.xml"));
+        sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath:mybatis/mapper/*.xml"));
         return sqlSessionFactoryBean.getObject();
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(HelloWorld.class, args);
+        SpringApplication.run(CoreApplication.class, args);
         logger.info("springboot 开启成功");
     }
 }

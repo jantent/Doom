@@ -8,9 +8,20 @@ CREATE TABLE USER (
   username    VARCHAR(64)                NOT NULL,
   sex         VARCHAR(64)                NOT NULL,
   birthday    TIMESTAMP  DEFAULT CURRENT_TIMESTAMP,
-  address    VARCHAR(255),
+  address     VARCHAR(255),
   PRIMARY KEY (id)
 );
+DROP TABLE IF EXISTS ADMIN;
+CREATE TABLE ADMIN (
+  adminId INTEGER AUTO_INCREMENT     NOT NULL,
+  adminAccount  VARCHAR(64)          NOT NULL,
+  adminPassword VARCHAR(64)          NOT NULL,
+  address VARCHAR(255),
+  PRIMARY KEY (adminId)
+);
+
+INSERT INTO ADMIN(adminAccount,adminPassword,address) VALUES ('张怀','123456','上海');
+INSERT INTO ADMIN(adminAccount,adminPassword,address) VALUES ('王宇','123456','上海');
 
 INSERT INTO USER(username,sex,address) VALUES ('张怀','男','上海');
 INSERT INTO USER(username,sex,address) VALUES ('玉婷','女','上海');

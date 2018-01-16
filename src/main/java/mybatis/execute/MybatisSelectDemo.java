@@ -1,7 +1,7 @@
 package mybatis.execute;
 
 
-import mybatis.eneity.User;
+import mybatis.entity.User;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;

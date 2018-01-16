@@ -60,14 +60,14 @@
     parameterType:指定输入参数类型是pojo
     #{}中指定pojo的属性名，接受到pojo对象的属性值
     -->
-    <insert id="insertUser" parameterType="mybatis.eneity.User">
+    <insert id="insertUser" parameterType="mybatis.entity.User">
         INSERT INTO USER(username,birthday,sex,address) VALUE (#{username},#{birthday},#{sex},#{address})
     </insert>
 
     <!--
     插入一条数据并返回主键ID
     -->
-    <insert id="insertUserReturnId" parameterType="mybatis.eneity.User">
+    <insert id="insertUserReturnId" parameterType="mybatis.entity.User">
         <!--
         将插入数据的主键返回，返回到user对象中
         SELECT LAST_INSERT_ID():得到刚insert进去记录的主键值，只适用于主键自增
@@ -85,7 +85,7 @@
         DELETE FROM USER WHERE id=#{id}
     </delete>
     
-    <update id="updateUser" parameterType="mybatis.eneity.User">
+    <update id="updateUser" parameterType="mybatis.entity.User">
         UPDATE USER SET username=#{username},birthday=#{birthday},sex=#{sex},address=#{address}
         where id=#{id}
     </update>

@@ -1,8 +1,8 @@
 package mybatis.dao;
 
-import mybatis.eneity.User;
-import mybatis.eneity.UserCustom;
-import mybatis.eneity.UserQueryVo;
+import mybatis.entity.User;
+import mybatis.entity.UserCustom;
+import mybatis.entity.UserQueryVo;
 
 import java.util.HashMap;
 import java.util.List;

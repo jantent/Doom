@@ -1,15 +1,13 @@
 package mybatis.test;
 
 import mybatis.dao.UserDao;
-import mybatis.eneity.User;
-import mybatis.eneity.UserCustom;
-import mybatis.eneity.UserQueryVo;
+import mybatis.entity.User;
+import mybatis.entity.UserCustom;
+import mybatis.entity.UserQueryVo;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import util.PrintUtil;
 

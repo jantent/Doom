@@ -15,8 +15,9 @@ import util.PrintUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
-
+@SuppressWarnings("all")
 public class UserDaoTest {
 
 
@@ -34,7 +35,8 @@ public class UserDaoTest {
     public void testSelect() throws Exception{
         SqlSession sqlSession = sqlSessionFactory.openSession();
         UserDao userDao = sqlSession.getMapper(UserDao.class);
-        PrintUtil.print(userDao.findUserById(2));
+        HashMap<String,Object> map = userDao.findUserById(2);
+        PrintUtil.print(map);
     }
 
     @Test
@@ -57,6 +59,31 @@ public class UserDaoTest {
 
         List<UserCustom> list = userDao.findUserList(userQueryVo);
         PrintUtil.print(list);
+
+    }
+
+    @Test
+     public void testFindCount() throws Exception{
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        UserDao userDao = sqlSession.getMapper(UserDao.class);
+        // 创建包装对象，设置查询条件
+        UserCustom userCustom = new UserCustom();
+        userCustom.setSex("男");
+        userCustom.setUsername("小明");
+        UserQueryVo userQueryVo = new UserQueryVo();
+        userQueryVo.setUserCustom(userCustom);
+
+        int count = userDao.findUserCount(userQueryVo);
+        PrintUtil.print(count);
+
+    }
+
+    @Test
+    public void testFindUserMap() throws Exception{
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        UserDao userDao = sqlSession.getMapper(UserDao.class);
+        User user = userDao.findUserByResultMap(2);
+        PrintUtil.print(user);
 
     }
 }

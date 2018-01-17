@@ -19,7 +19,7 @@ import javax.sql.DataSource;
 @EnableAutoConfiguration
 @SpringBootApplication
 @ComponentScan
-@MapperScan("springboot.domain.eneity")
+@MapperScan("springBoot.domain.dao")
 public class CoreApplication {
 
     private static Logger logger = Logger.getLogger(CoreApplication.class);
@@ -32,11 +32,12 @@ public class CoreApplication {
     }
 
     // 提供SQLSession
+    @Bean
     public SqlSessionFactory sqlSessionFactoryBean() throws Exception {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource());
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath:mybatis/mapper/*.xml"));
+        sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath*:/mybatis/springMapper/*.xml"));
         return sqlSessionFactoryBean.getObject();
     }
 

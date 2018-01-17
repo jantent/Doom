@@ -13,5 +13,5 @@ spring:
     maxActive: 100
 
 mybatis:
-  mapper-locations: classpath:mybatis/mapper/AdminDao.xml
+  mapper-locations: classpath:mybatis/mapper/*.xml
   type-aliases-package: springBoot.domain.dao

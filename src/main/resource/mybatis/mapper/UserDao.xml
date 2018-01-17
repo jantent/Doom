@@ -24,10 +24,52 @@
         <result column="username_" property="username"></result>
     </resultMap>
     <!--
+    定义sql片段
+    经验：是基于单表来定义sql片段，这样sql片段可重用性高
+    在sql片段中不要包括where
+    -->
+    <sql id="query_user_where">
+        <if test="userCustom!=null">
+            <if test="userCustom.sex!=null and userCustom.sex!=''">
+                and USER.sex = #{userCustom.sex}
+            </if>
+            <if test="userCustom.username!=null and userCustom.username!=''">
+                and USER.username LIKE '%${userCustom.username}%'
+            </if>
+            <!--
+            使用foreach遍历传入对象中的集合
+            collection:指定输入的对象集合属性
+            item:每个遍历生成对象名称
+            open:开始遍历拼接字符串
+            close:结束遍历拼接字符串
+            separator:遍历的两个对象的需要拼接的分隔串
+            -->
+
+            <!--<if test="idList!=null">
+                <foreach collection="idList" item="user_id" open="AND (" close=")" separator="OR">
+                    id=#{user_id}
+                </foreach>
+            </if>-->
+            <!--
+            另一种foreach形式
+            in(a,b,c)
+            -->
+            <if test="idList!=null">
+                <foreach collection="idList" item="user_id" open="AND id in(" close=")" separator=",">
+                    #{user_id}
+                </foreach>
+            </if>
+        </if>
+    </sql>
+    <!--
     resuleMap:制定定义的resultMap的id，如果这个resultMap在其他的mapper文件，前面需要加namespace
     -->
     <select id="findUserByResultMap" parameterType="int" resultMap="userResultMap">
-        SELECT id id_,username username_ FROM USER WHERE id=#{value}
+        SELECT
+            id       id_,
+            username username_
+        FROM USER
+        WHERE id = #{value}
     </select>
 
     <!-- 将sql语句封装到mappenStatement对象中，所以将id称为statement的id
@@ -35,16 +77,27 @@
          resultType 指定输出结果的所映射的java对象类型
     -->
     <select id="findUserById" parameterType="int" resultType="HashMap">
-        SELECT * FROM USER WHERE id=#{id}
+        SELECT *
+        FROM USER
+        WHERE id = #{id}
     </select>
 
-    
-    <select id="findUserList" parameterType="UserQueryVo" resultType="UserCustom">
-        SELECT * FROM user WHERE user.sex = #{userCustom.sex} AND user.username LIKE '%${userCustom.username}%'
+
+    <select id="findUserList" parameterType="mybatis.entity.UserQueryVo" resultType="mybatis.entity.UserCustom">
+        SELECT * FROM USER
+        <!--
+        where标签可以自定去掉第一个条件的and
+        -->
+        <where>
+            <!-- 引用sql片段的id，如果refid指定id不在本mapper文件，需要添加namespace -->
+            <include refid="query_user_where"/>
+        </where>
     </select>
 
     <select id="findUserCount" parameterType="UserQueryVo" resultType="int">
-        SELECT count(*) FROM user WHERE user.sex = #{userCustom.sex} AND user.username LIKE '%${userCustom.username}%'
+        SELECT count(*)
+        FROM user
+        WHERE user.sex = #{userCustom.sex} AND user.username LIKE '%${userCustom.username}%'
     </select>
 
     <!--
@@ -53,7 +106,9 @@
     ${}：表示拼接sql字符串，会有sql注入的风险
     -->
     <select id="findUserByName" parameterType="java.lang.String" resultType="User">
-        SELECT * FROM USER WHERE username LIKE '%${value}%'
+        SELECT *
+        FROM USER
+        WHERE username LIKE '%${value}%'
     </select>
 
     <!--
@@ -61,7 +116,7 @@
     #{}中指定pojo的属性名，接受到pojo对象的属性值
     -->
     <insert id="insertUser" parameterType="mybatis.entity.User">
-        INSERT INTO USER(username,birthday,sex,address) VALUE (#{username},#{birthday},#{sex},#{address})
+        INSERT INTO USER (username, birthday, sex, address) VALUE (#{username}, #{birthday}, #{sex}, #{address})
     </insert>
 
     <!--
@@ -82,11 +137,13 @@
     </insert>
 
     <delete id="deleteUser" parameterType="Integer">
-        DELETE FROM USER WHERE id=#{id}
+        DELETE FROM USER
+        WHERE id = #{id}
     </delete>
-    
+
     <update id="updateUser" parameterType="mybatis.entity.User">
-        UPDATE USER SET username=#{username},birthday=#{birthday},sex=#{sex},address=#{address}
-        where id=#{id}
+        UPDATE USER
+        SET username = #{username}, birthday = #{birthday}, sex = #{sex}, address = #{address}
+        WHERE id = #{id}
     </update>
 </mapper>

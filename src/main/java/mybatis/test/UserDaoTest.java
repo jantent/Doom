@@ -13,6 +13,7 @@ import util.PrintUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 @SuppressWarnings("all")
@@ -50,13 +51,17 @@ public class UserDaoTest {
         UserDao userDao = sqlSession.getMapper(UserDao.class);
         // 创建包装对象，设置查询条件
         UserCustom userCustom = new UserCustom();
-        userCustom.setSex("女");
+//        userCustom.setSex("女");
         userCustom.setUsername("小明");
+        List<Integer> list = new ArrayList<>();
+        list.add(6);
+        list.add(7);
+        list.add(8);
         UserQueryVo userQueryVo = new UserQueryVo();
         userQueryVo.setUserCustom(userCustom);
-
-        List<UserCustom> list = userDao.findUserList(userQueryVo);
-        PrintUtil.print(list);
+        userQueryVo.setIdList(list);
+        List<UserCustom> listResult = userDao.findUserList(userQueryVo);
+        PrintUtil.print(listResult);
 
     }
 

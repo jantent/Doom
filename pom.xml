@@ -24,23 +24,24 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>1.5.1.RELEASE</version>
+        <relativePath/>
     </parent>
     <dependencies>
 
+        <!--3.0的junit是使用编程的方式来进行测试，而junit4是使用注解的方式来运行junit-->
         <dependency>
-
-            <!--3.0的junit是使用编程的方式来进行测试，而junit4是使用注解的方式来运行junit-->
-
             <groupId>junit</groupId>
-
             <artifactId>junit</artifactId>
-
             <version>4.11</version>
-
             <scope>test</scope>
-
         </dependency>
 
+        <!-- 数据库连接池-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.0.18</version>
+        </dependency>
 
         <dependency>
             <groupId>io.netty</groupId>
@@ -49,15 +50,10 @@
         </dependency>
 
         <dependency>
-
             <groupId>mysql</groupId>
-
             <artifactId>mysql-connector-java</artifactId>
-
             <version>5.1.35</version>
-
             <scope>runtime</scope>
-
         </dependency>
 
         <dependency>
@@ -79,17 +75,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>RELEASE</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
@@ -100,23 +85,18 @@
         </dependency>
 
         <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>1.2.0</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
 
-        <!-- 数据库连接池-->
         <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
-            <version>1.0.18</version>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>1.2.0</version>
         </dependency>
+
+
 
     </dependencies>
 

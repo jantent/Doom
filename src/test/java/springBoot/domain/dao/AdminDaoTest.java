@@ -2,10 +2,8 @@ package springBoot.domain.dao;
 
 import org.junit.runner.RunWith;
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.testng.annotations.Test;
 import springBoot.domain.bean.Admin;
 
 import javax.annotation.Resource;
@@ -18,13 +16,11 @@ public class AdminDaoTest {
     @Resource
     private AdminDao adminDao;
 
-    @Test
     public void testGetUserByName() throws Exception {
         Admin admin = adminDao.findAdminById(1);
         System.out.println(admin);
     }
 
-    @Test
     public void testInsertAdminReturnId() throws Exception {
         Admin admin = new Admin();
         admin.setAddress("扬州高邮");

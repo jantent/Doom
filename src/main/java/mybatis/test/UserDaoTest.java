@@ -8,7 +8,6 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.testng.annotations.Test;
 import util.PrintUtil;
 
 import java.io.IOException;
@@ -30,7 +29,6 @@ public class UserDaoTest {
     public UserDaoTest() throws IOException {
     }
 
-    @Test
     public void testSelect() throws Exception{
         SqlSession sqlSession = sqlSessionFactory.openSession();
         UserDao userDao = sqlSession.getMapper(UserDao.class);
@@ -38,7 +36,6 @@ public class UserDaoTest {
         PrintUtil.print(map);
     }
 
-    @Test
     public void testFindName()throws Exception{
         SqlSession sqlSession = sqlSessionFactory.openSession();
         UserDao userDao = sqlSession.getMapper(UserDao.class);
@@ -46,7 +43,7 @@ public class UserDaoTest {
         PrintUtil.print(user);
     }
 
-    @Test void testFindVo() throws Exception{
+     void testFindVo() throws Exception{
         SqlSession sqlSession = sqlSessionFactory.openSession();
         UserDao userDao = sqlSession.getMapper(UserDao.class);
         // 创建包装对象，设置查询条件
@@ -65,7 +62,6 @@ public class UserDaoTest {
 
     }
 
-    @Test
      public void testFindCount() throws Exception{
         SqlSession sqlSession = sqlSessionFactory.openSession();
         UserDao userDao = sqlSession.getMapper(UserDao.class);
@@ -81,7 +77,6 @@ public class UserDaoTest {
 
     }
 
-    @Test
     public void testFindUserMap() throws Exception{
         SqlSession sqlSession = sqlSessionFactory.openSession();
         UserDao userDao = sqlSession.getMapper(UserDao.class);

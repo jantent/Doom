@@ -5,7 +5,6 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.testng.annotations.Test;
 import util.PrintUtil;
 
 import java.io.IOException;
@@ -15,7 +14,6 @@ import java.util.Date;
 @SuppressWarnings("all")
 public class DeleteAndUpdateDemo {
 
-    @Test
     public void deleteUser() throws Exception{
         //mybatis配置文件
         String resource = "mybatis/mybatis-config.xml";
@@ -34,8 +32,6 @@ public class DeleteAndUpdateDemo {
         sqlSession.commit();
         sqlSession.close();
     }
-
-    @Test
     public void updateUser() throws IOException {
         //mybatis配置文件
         String resource = "mybatis/mybatis-config.xml";

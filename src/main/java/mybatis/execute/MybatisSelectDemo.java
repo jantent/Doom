@@ -6,7 +6,6 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,7 +13,6 @@ import java.util.List;
 
 @SuppressWarnings("all")
 public class MybatisSelectDemo {
-    @Test
     public void  findUserByIdTest() throws IOException {
         //mybatis配置文件
         String resource = "mybatis/mybatis-config.xml";
@@ -33,7 +31,6 @@ public class MybatisSelectDemo {
         sqlSession.close();
     }
 
-    @Test
     public void findUserByName() throws Exception{
         //mybatis配置文件
         String resource = "mybatis/mybatis-config.xml";

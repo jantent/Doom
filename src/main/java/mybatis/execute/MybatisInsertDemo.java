@@ -5,7 +5,6 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.testng.annotations.Test;
 import util.PrintUtil;
 
 import java.io.IOException;
@@ -14,7 +13,6 @@ import java.util.Date;
 
 @SuppressWarnings("all")
 public class MybatisInsertDemo {
-    @Test
     public void  insertTest() throws IOException {
         //mybatis配置文件
         String resource = "mybatis/mybatis-config.xml";
@@ -39,7 +37,6 @@ public class MybatisInsertDemo {
         sqlSession.close();
     }
 
-    @Test
     public void  insertReturnId() throws IOException {
         //mybatis配置文件
         String resource = "mybatis/mybatis-config.xml";

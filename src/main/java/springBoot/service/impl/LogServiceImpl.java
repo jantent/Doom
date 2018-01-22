@@ -1,6 +1,7 @@
 package springBoot.service.impl;
 
 import com.github.pagehelper.PageHelper;
+import org.springframework.stereotype.Service;
 import springBoot.constant.WebConst;
 import springBoot.dao.LogVoMapper;
 import springBoot.modal.vo.LogVo;
@@ -15,6 +16,7 @@ import java.util.List;
  * @author tangj
  * @date 2018/1/21 20:52
  */
+@Service
 public class LogServiceImpl implements ILogService{
 
     @Resource

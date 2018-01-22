@@ -20,7 +20,7 @@ import javax.sql.DataSource;
 @EnableAutoConfiguration
 @SpringBootApplication
 @ComponentScan
-@MapperScan("springBoot.domain.dao")
+@MapperScan("springBoot.dao")
 public class CoreApplication {
 
     private static Logger logger = Logger.getLogger(CoreApplication.class);

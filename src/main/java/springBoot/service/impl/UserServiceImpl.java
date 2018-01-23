@@ -7,7 +7,7 @@ import springBoot.exception.TipException;
 import springBoot.modal.vo.UserVo;
 import springBoot.modal.vo.UserVoExample;
 import springBoot.service.IUserService;
-import util.MyUtils;
+import springBoot.util.MyUtils;
 
 import javax.annotation.Resource;
 import java.util.List;

@@ -7,7 +7,7 @@ import springBoot.dao.LogVoMapper;
 import springBoot.modal.vo.LogVo;
 import springBoot.modal.vo.LogVoExample;
 import springBoot.service.ILogService;
-import util.DateKit;
+import springBoot.util.DateKit;
 
 import javax.annotation.Resource;
 import java.util.List;

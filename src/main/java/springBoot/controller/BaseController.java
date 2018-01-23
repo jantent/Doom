@@ -1,6 +1,8 @@
 package springBoot.controller;
 
-import util.MapCache;
+import springBoot.modal.vo.UserVo;
+import springBoot.util.MapCache;
+import springBoot.util.MyUtils;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -31,5 +33,17 @@ public abstract class BaseController {
     public BaseController keywords(HttpServletRequest request, String keywords) {
         request.setAttribute("keywords", keywords);
         return this;
+    }
+
+    public UserVo user(HttpServletRequest request){
+        return MyUtils.getLoginUser(request);
+    }
+
+    public Integer getUid(HttpServletRequest request){
+        return this.user(request).getUid();
+    }
+
+    public String render_404() {
+        return "comm/error_404";
     }
 }

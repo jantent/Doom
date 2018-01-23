@@ -1,4 +1,4 @@
-package util;
+package springBoot.util;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;

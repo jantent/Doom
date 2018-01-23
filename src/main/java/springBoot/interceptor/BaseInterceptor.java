@@ -2,13 +2,15 @@ package springBoot.interceptor;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import springBoot.constant.WebConst;
 import springBoot.dto.Types;
 import springBoot.modal.vo.UserVo;
 import springBoot.service.IUserService;
-import util.*;
+import springBoot.util.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author tangj
  * @date 2018/1/21 22:27
  */
+@Component
 public class BaseInterceptor implements HandlerInterceptor {
     private static final Logger logger = LoggerFactory.getLogger(BaseInterceptor.class);
     private static final String USER_AGENT = "user-agent";
@@ -27,10 +30,10 @@ public class BaseInterceptor implements HandlerInterceptor {
 
     private MapCache cache = MapCache.single();
 
-    @Resource
+    @Autowired
     private Commons commons;
 
-    @Resource
+    @Autowired
     private AdminCommons adminCommons;
 
     @Override
@@ -63,7 +66,8 @@ public class BaseInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-
+        request.setAttribute("commons",commons);
+        request.setAttribute("adminCommons",adminCommons);
     }
 
     @Override

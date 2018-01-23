@@ -2,7 +2,7 @@ package crawler;
 
 import crawler.client.MyHttpClient;
 import crawler.parse.ParseUtil;
-import util.PrintUtil;
+import springBoot.util.PrintUtil;
 
 public class MyApplication {
 

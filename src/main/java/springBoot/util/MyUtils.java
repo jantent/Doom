@@ -1,21 +1,36 @@
-package util;
+package springBoot.util;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import springBoot.constant.WebConst;
+import springBoot.exception.TipException;
 import springBoot.modal.vo.UserVo;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.sql.DataSource;
+import java.io.*;
+import java.net.URLDecoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Properties;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author tangj
  * @date 2018/1/21 19:48
  */
 public class MyUtils {
+
+    private static final Logger logger = LoggerFactory.getLogger(MyUtils.class);
+
+    private static DataSource dataSource;
+
+    private static ReentrantLock lock;
 
     /**
      * mds加密
@@ -105,5 +120,76 @@ public class MyUtils {
             }
         }
         return null;
+    }
+
+    public static String getUploadFilePath() {
+        String path = MyUtils.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+        path = path.substring(1, path.length());
+        try {
+            path = URLDecoder.decode(path, "utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        int lastIndex = path.lastIndexOf("/") + 1;
+        path = path.substring(0, lastIndex);
+        File file = new File("");
+        return file.getAbsolutePath() + "/";
+
+    }
+
+    /**
+     * 获取随机数
+     *
+     * @param size
+     * @return
+     */
+    public static String getRandomNumber(int size) {
+        String num = "";
+        for (int i = 0; i < size; i++) {
+            double a = Math.random() * 9.0D;
+            a = Math.ceil(a);
+            int randomNum = (new Double(a)).intValue();
+            num = num + randomNum;
+        }
+        return num;
+    }
+
+    public static DataSource getNewDataSource() {
+        lock.lock();
+        try {
+            if (dataSource == null) {
+                Properties properties = MyUtils.getPropFromFile("application-jdbc.properties");
+                if (properties.size() == 0) {
+                    return dataSource;
+                }
+                DriverManagerDataSource managerDataSource = new DriverManagerDataSource();
+                managerDataSource.setDriverClassName("com.mysql.jdbc.Driver");
+                managerDataSource.setPassword(properties.getProperty("spring.datasource.password"));
+                String str = "jdbc:mysql://" + properties.getProperty("spring.datasource.url") + "/" + properties.getProperty("spring.datasource.dbname") + "?useUnicode=true&characterEncoding=utf-8&useSSL=false";
+                managerDataSource.setUrl(str);
+                managerDataSource.setUsername(properties.getProperty("spring.datasource.username"));
+                dataSource = managerDataSource;
+            }
+
+        } finally {
+            lock.unlock();
+        }
+        return dataSource;
+    }
+
+    /**
+     * @param fileName 获取jar外部的文件
+     * @return 返回属性
+     */
+    private static Properties getPropFromFile(String fileName) {
+        Properties properties = new Properties();
+        try {
+//            默认是classPath路径
+            InputStream resourceAsStream = new FileInputStream(fileName);
+            properties.load(resourceAsStream);
+        } catch (TipException | IOException e) {
+            logger.error("get properties file fail={}", e.getMessage());
+        }
+        return properties;
     }
 }

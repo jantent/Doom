@@ -13,8 +13,8 @@ import springBoot.modal.bo.RestResponseBo;
 import springBoot.modal.vo.UserVo;
 import springBoot.service.ILogService;
 import springBoot.service.IUserService;
-import util.Commons;
-import util.MyUtils;
+import springBoot.util.Commons;
+import springBoot.util.MyUtils;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;

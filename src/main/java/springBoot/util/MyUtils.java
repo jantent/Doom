@@ -1,6 +1,9 @@
 package springBoot.util;
 
 import org.apache.commons.lang3.StringUtils;
+import org.commonmark.node.Node;
+import org.commonmark.parser.Parser;
+import org.commonmark.renderer.html.HtmlRenderer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -31,6 +34,11 @@ public class MyUtils {
     private static DataSource dataSource;
 
     private static ReentrantLock lock;
+
+    /**
+     * markdown解析器
+     */
+    private static Parser parser = Parser.builder().build();
 
     /**
      * mds加密
@@ -191,5 +199,44 @@ public class MyUtils {
             logger.error("get properties file fail={}", e.getMessage());
         }
         return properties;
+    }
+
+    /**
+     * 提取html中的文字
+     *
+     * @param html
+     * @return
+     */
+    public static String htmlToText(String html) {
+        if (StringUtils.isNotBlank(html)) {
+            return html.replaceAll("(?s)<[^>]*>(\\s*<[^>]*>)*", " ");
+        }
+        return "";
+    }
+
+    /**
+     * markdown转换为html
+     *
+     * @param markdown
+     * @return
+     */
+    public static String mdToHtml(String markdown) {
+        if (StringUtils.isBlank(markdown)) {
+            return "";
+        }
+        Node document = parser.parse(markdown);
+        HtmlRenderer renderer = HtmlRenderer.builder().build();
+        String content = renderer.render(document);
+        content = Commons.emoji(content);
+
+        // TODO 支持网易云音乐输出
+//        if (TaleConst.BCONF.getBoolean("app.support_163_music", true) && content.contains("[mp3:")) {
+//            content = content.replaceAll("\\[mp3:(\\d+)\\]", "<iframe frameborder=\"no\" border=\"0\" marginwidth=\"0\" marginheight=\"0\" width=350 height=106 src=\"//music.163.com/outchain/player?type=2&id=$1&auto=0&height=88\"></iframe>");
+//        }
+        // 支持gist代码输出
+//        if (TaleConst.BCONF.getBoolean("app.support_gist", true) && content.contains("https://gist.github.com/")) {
+//            content = content.replaceAll("&lt;script src=\"https://gist.github.com/(\\w+)/(\\w+)\\.js\">&lt;/script>", "<script src=\"https://gist.github.com/$1/$2\\.js\"></script>");
+//        }
+        return content;
     }
 }

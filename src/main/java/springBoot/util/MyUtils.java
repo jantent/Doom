@@ -22,6 +22,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Properties;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author tangj
@@ -40,6 +42,7 @@ public class MyUtils {
      */
     private static Parser parser = Parser.builder().build();
 
+    private static final Pattern SLUG_REGEX = Pattern.compile("^[A-Za-z0-9_-]{5,100}$", Pattern.CASE_INSENSITIVE);
     /**
      * mds加密
      *
@@ -238,5 +241,16 @@ public class MyUtils {
 //            content = content.replaceAll("&lt;script src=\"https://gist.github.com/(\\w+)/(\\w+)\\.js\">&lt;/script>", "<script src=\"https://gist.github.com/$1/$2\\.js\"></script>");
 //        }
         return content;
+    }
+
+    public static boolean isPath(String slug){
+        if (StringUtils.isNotBlank(slug)){
+            if (slug.contains("/") || slug.contains(" ") || slug.contains(".")) {
+                return false;
+            }
+            Matcher matcher = SLUG_REGEX.matcher(slug);
+            return matcher.find();
+        }
+        return false;
     }
 }

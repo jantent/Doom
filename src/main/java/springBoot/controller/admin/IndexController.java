@@ -1,4 +1,4 @@
-package springBoot.controller;
+package springBoot.controller.admin;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import springBoot.constant.WebConst;
+import springBoot.controller.BaseController;
 import springBoot.dto.LogActions;
 import springBoot.exception.TipException;
 import springBoot.modal.bo.RestResponseBo;

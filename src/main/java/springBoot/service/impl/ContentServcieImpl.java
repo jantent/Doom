@@ -1,5 +1,6 @@
 package springBoot.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.vdurmont.emoji.EmojiParser;
 import org.apache.commons.lang3.StringUtils;
@@ -18,6 +19,7 @@ import springBoot.util.DateKit;
 import springBoot.util.MyUtils;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author tangj
@@ -95,11 +97,18 @@ public class ContentServcieImpl implements IContentService {
 
     @Override
     public PageInfo<ContentVo> getContents(Integer p, Integer limit) {
-        return null;
+        ContentVoExample example = new ContentVoExample();
+        example.setOrderByClause("created desc");
+        example.createCriteria().andTagsEqualTo(Types.ARTICLE.getType()).andStatusEqualTo(Types.PUBLISH.getType());
+        PageHelper.startPage(p, limit);
+        List<ContentVo> contentVoList = contentDao.selectByExampleWithBLOBs(example);
+        PageInfo<ContentVo> pageInfo = new PageInfo<>();
+        return pageInfo;
     }
 
     @Override
     public ContentVo getContents(String id) {
+
         return null;
     }
 

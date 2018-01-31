@@ -16,7 +16,7 @@ public class Demo1 {
         System.out.println("正在执行任务");
         Thread.sleep(1000);
         // 5.设置定时一秒取结果
-        System.out.println("task运行结果为:" + result.get(1,TimeUnit.MILLISECONDS));
+        System.out.println("task运行结果为:" + result.get());
     }
 }
 

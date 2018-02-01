@@ -10,7 +10,7 @@ import springBoot.modal.bo.CommentBo;
 import springBoot.modal.vo.CommentVo;
 import springBoot.modal.vo.CommentVoExample;
 import springBoot.modal.vo.ContentVo;
-import springBoot.service.ICommentServcie;
+import springBoot.service.ICommentService;
 import springBoot.service.IContentService;
 import springBoot.util.DateKit;
 import springBoot.util.MyUtils;
@@ -23,7 +23,7 @@ import java.util.List;
  * @author tangj
  * @date 2018/1/28 15:53
  */@Service
-public class CommentService implements ICommentServcie {
+public class CommentService implements ICommentService {
 
     @Resource
     private CommentVoMapper commentDao;

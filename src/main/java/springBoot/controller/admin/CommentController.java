@@ -14,7 +14,7 @@ import springBoot.modal.bo.RestResponseBo;
 import springBoot.modal.vo.CommentVo;
 import springBoot.modal.vo.CommentVoExample;
 import springBoot.modal.vo.UserVo;
-import springBoot.service.ICommentServcie;
+import springBoot.service.ICommentService;
 import springBoot.util.MyUtils;
 
 import javax.annotation.Resource;
@@ -33,7 +33,7 @@ public class CommentController extends BaseController {
     private static final Logger logger = LoggerFactory.getLogger(CommentController.class);
 
     @Resource
-    private ICommentServcie commentServcie;
+    private ICommentService commentServcie;
 
     @GetMapping(value = "")
     public String index(@RequestParam(value = "page", defaultValue = "1") int page,

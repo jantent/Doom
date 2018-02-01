@@ -9,7 +9,7 @@ import springBoot.modal.vo.CommentVoExample;
  * @author tangj
  * @date 2018/1/28 15:46
  */
-public interface ICommentServcie {
+public interface ICommentService {
 
     /**
      * 保存对象

@@ -11,15 +11,18 @@ import springBoot.constant.WebConst;
 import springBoot.exception.TipException;
 import springBoot.modal.vo.UserVo;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
+import java.awt.*;
 import java.io.*;
 import java.net.URLDecoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 import java.util.Properties;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.regex.Matcher;
@@ -45,6 +48,7 @@ public class MyUtils {
     private static final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
     private static final Pattern SLUG_REGEX = Pattern.compile("^[A-Za-z0-9_-]{5,100}$", Pattern.CASE_INSENSITIVE);
+
     /**
      * mds加密
      *
@@ -245,8 +249,8 @@ public class MyUtils {
         return content;
     }
 
-    public static boolean isPath(String slug){
-        if (StringUtils.isNotBlank(slug)){
+    public static boolean isPath(String slug) {
+        if (StringUtils.isNotBlank(slug)) {
             if (slug.contains("/") || slug.contains(" ") || slug.contains(".")) {
                 return false;
             }
@@ -282,5 +286,44 @@ public class MyUtils {
         value = value.replaceAll("[\\\"\\\'][\\s]*javascript:(.*)[\\\"\\\']", "\"\"");
         value = value.replaceAll("script", "");
         return value;
+    }
+
+    public static String getFileKey(String name) {
+        String prefix = "/upload/" + DateKit.dateFormat(new Date(), "yyyy/MM");
+        if (!new File(getUploadFilePath() + prefix).exists()) {
+            new File(getUploadFilePath() + prefix).mkdirs();
+        }
+
+        name = StringUtils.trimToNull(name);
+        if (name == null) {
+            return prefix + "/" + UUID.UU32() + "." + null;
+        } else {
+            name = name.replace('\\', '/');
+            name = name.substring(name.lastIndexOf("/") + 1);
+            int index = name.lastIndexOf(".");
+            String ext = null;
+            if (index >= 0) {
+                ext = StringUtils.trimToNull(name.substring(index + 1));
+            }
+            return prefix + "/" + UUID.UU32() + "." + (ext == null ? null : (ext));
+        }
+    }
+
+    /**
+     * 判断文件类型是否是图片
+     *
+     * @param imageFile
+     * @return
+     */
+    public static boolean isImage(InputStream imageFile) {
+        try {
+            Image img = ImageIO.read(imageFile);
+            if (img == null || img.getWidth(null) <= 0 || img.getHeight(null) <= 0) {
+                return false;
+            }
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

@@ -103,7 +103,7 @@ public class ContentServcieImpl implements IContentService {
         example.createCriteria().andTagsEqualTo(Types.ARTICLE.getType()).andStatusEqualTo(Types.PUBLISH.getType());
         PageHelper.startPage(p, limit);
         List<ContentVo> contentVoList = contentDao.selectByExampleWithBLOBs(example);
-        PageInfo<ContentVo> pageInfo = new PageInfo<>();
+        PageInfo<ContentVo> pageInfo = new PageInfo<>(contentVoList);
         return pageInfo;
     }
 

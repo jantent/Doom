@@ -1,7 +1,10 @@
 server:
-  port: 80
+  port: 8443
+  ssl:
+    key-store: classpath:keystore.jks
+    key-store-password: 123456
+    key-store-type: JKS
 spring:
-
   profiles:
     active: jdbc
   thymeleaf:
@@ -13,6 +16,9 @@ spring:
     mode: HTML5
     cache: false
 
+logging:
+  file: D:/mylog/log.log
+
 mybatis:
   mapper-locations: classpath:mybatis/mapper/*.xml
   type-aliases-package: springBoot.domain.dao
@@ -21,5 +27,12 @@ pagehelper:
   reasonable: true
   support-methods-arguments: true
   params: count=countSql
+
+author:
+  name: tangj
+  age: 25
+
+httpportcfg:
+  http_port: 80
 
 

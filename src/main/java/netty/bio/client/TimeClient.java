@@ -10,12 +10,12 @@ public class TimeClient {
 
     private static void send() {
 
-        int port = 8080;
+        int port = 9813;
         Socket socket = null;
         BufferedReader in = null;
         PrintWriter out = null;
         try {
-            socket = new Socket("127.0.0.1", port);
+            socket = new Socket("192.168.109.69", port);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(), true);
             out.println("QUERY TIME ORDER");

@@ -21,29 +21,20 @@ public class JdbcPool implements DataSource {
 	private static LinkedList<Connection> listConnections = new LinkedList<Connection>();
 
 	static {
-		// 在静态代码块中加载数据库配置文件
 		try {
-			// 读取properties中的数据库配置信息
 			InputStream is = new BufferedInputStream(new FileInputStream("./src/main/test/db.properties"));
 			Properties prop = new Properties();
 			prop.load(is);
 
-			// 数据库驱动
 			String driver = prop.getProperty("driver");
-			// 数据库url
 			String url = prop.getProperty("url");
-			// 数据库连接用户名
 			String username = prop.getProperty("username");
-			// 数据库连接密码
 			String password = prop.getProperty("password");
-			// 数据库连接池的初始化连接数大小
 			int jdbcPoolInitSize = Integer.parseInt(prop.getProperty("jdbcPoolInitSize"));
-			// 加载数据库
 			Class.forName(driver);
 			for (int i = 0; i < jdbcPoolInitSize; i++) {
 				Connection conn = DriverManager.getConnection(url, username, password);
-				System.out.println("获取到了链接" + conn);
-				// 将获取到的数据库连接加入到listConnections集合中，listConnections集合此时就是一个存放了数据库连接的连接池
+				System.out.println("success" + conn);
 				listConnections.add(conn);
 			}
 		} catch (Exception e) {
@@ -88,11 +79,9 @@ public class JdbcPool implements DataSource {
 
 	@Override
 	public Connection getConnection() throws SQLException {
-		// 如果数据库连接池中连接对象个数大于0个
 		if (listConnections.size() > 0) {
-			// 从集合中获取一个数据库链接
 			final Connection conn = listConnections.removeFirst();
-			System.out.println("数据库连接池大小是: " + listConnections.size());
+			System.out.println("= " + listConnections.size());
 			return (Connection) Proxy.newProxyInstance(JdbcPool.class.getClassLoader(), conn.getClass().getInterfaces(),
 					new InvocationHandler() {
 
@@ -101,10 +90,9 @@ public class JdbcPool implements DataSource {
 							if (!method.getName().equals("close")) {
 								return method.invoke(conn, args);
 							} else {
-								// 如果调用的是Connection对象的close方法，就把conn还给数据库连接池
 								listConnections.add(conn);
-								System.out.println(conn + "被还给了连接池");
-								System.out.println("现在连接池的大小为： " + listConnections.size());
+								System.out.println(conn + "aa");
+								System.out.println("aaa " + listConnections.size());
 								return null;
 							}
 
@@ -112,7 +100,7 @@ public class JdbcPool implements DataSource {
 					});
 
 		}else {
-			throw new RuntimeException("对不起数据库忙");
+			throw new RuntimeException("aaa");
 		}
 	}
 

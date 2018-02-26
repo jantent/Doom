@@ -10,8 +10,6 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @author tangj
  * @date 2018/2/17 10:14
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest
 public class ContentServcieImplTest {
     @Test
     public void getContents() throws Exception {

@@ -15,6 +15,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
@@ -33,6 +34,7 @@ public class CoreApplication {
 
     @Resource
     private HttpPortCfg httpPortCfg;
+
 
     public static void main(String[] args) {
         SpringApplication app = new SpringApplication(CoreApplication.class);
@@ -87,7 +89,7 @@ public class CoreApplication {
         connector.setScheme("http");
         connector.setPort(Integer.valueOf(httpPortCfg.getHttp_port()));
         connector.setSecure(false);
-        connector.setRedirectPort(8443);
+        connector.setRedirectPort(Integer.valueOf(httpPortCfg.getHttps_port()));
         return connector;
     }
 }

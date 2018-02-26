@@ -326,4 +326,16 @@ public class MyUtils {
             return false;
         }
     }
+
+    public static void logout(HttpSession session, HttpServletResponse response) {
+        session.removeAttribute(WebConst.LOGIN_SESSION_KEY);
+        Cookie cookie = new Cookie(WebConst.USER_IN_COOKIE, "");
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+        try {
+            response.sendRedirect(Commons.site_url());
+        } catch (IOException e) {
+            logger.error(e.getMessage(), e);
+        }
+    }
 }

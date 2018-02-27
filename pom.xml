@@ -30,15 +30,6 @@
         <relativePath/>
     </parent>
     <dependencies>
-
-        <!--3.0的junit是使用编程的方式来进行测试，而junit4是使用注解的方式来运行junit-->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.11</version>
-            <scope>test</scope>
-        </dependency>
-
         <!-- 数据库连接池-->
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -46,12 +37,14 @@
             <version>1.0.18</version>
         </dependency>
 
+        <!-- netty -->
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
             <version>4.0.33.Final</version>
         </dependency>
 
+        <!-- mysql -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -59,12 +52,14 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!-- jsoup-->
         <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
             <version>1.8.3</version>
         </dependency>
 
+        <!-- spring boot 配置 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -80,6 +75,8 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!-- mybatis-->
 
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
@@ -132,6 +129,7 @@
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
 
+        <!-- thrift -->
         <dependency>
             <groupId>org.apache.thrift</groupId>
             <artifactId>libthrift</artifactId>

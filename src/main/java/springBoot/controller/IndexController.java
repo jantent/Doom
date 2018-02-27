@@ -114,7 +114,7 @@ public class IndexController extends BaseController {
         return this.render("post");
     }
 
-    @RequestMapping
+    @RequestMapping("logout")
     public void logout(HttpSession session, HttpServletResponse response) {
         MyUtils.logout(session, response);
     }

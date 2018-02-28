@@ -80,7 +80,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    cid, title, slug, created, modified, author_id, type, status, tags, categories, hits, 
+    cid, title, slug, created, modified, author_id, type, status, tags, categories, hits,
     comments_num, allow_comment, allow_ping, allow_feed
   </sql>
   <sql id="Blob_Column_List">
@@ -125,7 +125,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
-    select 
+    select
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
@@ -143,18 +143,18 @@
     </if>
   </delete>
   <insert id="insert" parameterType="springBoot.modal.vo.ContentVo" useGeneratedKeys="true" keyProperty="cid">
-    insert into t_contents (cid, title, slug, 
-      created, modified, author_id, 
-      type, status, tags, 
-      categories, hits, comments_num, 
-      allow_comment, allow_ping, allow_feed, 
-      content)
-    values (#{cid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{slug,jdbcType=VARCHAR}, 
-      #{created,jdbcType=INTEGER}, #{modified,jdbcType=INTEGER}, #{authorId,jdbcType=INTEGER}, 
-      #{type,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{tags,jdbcType=VARCHAR}, 
-      #{categories,jdbcType=VARCHAR}, #{hits,jdbcType=INTEGER}, #{commentsNum,jdbcType=INTEGER}, 
-      #{allowComment,jdbcType=BIT}, #{allowPing,jdbcType=BIT}, #{allowFeed,jdbcType=BIT}, 
-      #{content,jdbcType=LONGVARCHAR})
+    insert into t_contents (cid, title, slug,
+    created, modified, author_id,
+    type, status, tags,
+    categories, hits, comments_num,
+    allow_comment, allow_ping, allow_feed,
+    content)
+    values (#{cid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{slug,jdbcType=VARCHAR},
+    #{created,jdbcType=INTEGER}, #{modified,jdbcType=INTEGER}, #{authorId,jdbcType=INTEGER},
+    #{type,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{tags,jdbcType=VARCHAR},
+    #{categories,jdbcType=VARCHAR}, #{hits,jdbcType=INTEGER}, #{commentsNum,jdbcType=INTEGER},
+    #{allowComment,jdbcType=BIT}, #{allowPing,jdbcType=BIT}, #{allowFeed,jdbcType=BIT},
+    #{content,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="springBoot.modal.vo.ContentVo" useGeneratedKeys="true" keyProperty="cid">
     insert into t_contents
@@ -324,21 +324,21 @@
   <update id="updateByExampleWithBLOBs" parameterType="map">
     update t_contents
     set cid = #{record.cid,jdbcType=INTEGER},
-      title = #{record.title,jdbcType=VARCHAR},
-      slug = #{record.slug,jdbcType=VARCHAR},
-      created = #{record.created,jdbcType=INTEGER},
-      modified = #{record.modified,jdbcType=INTEGER},
-      author_id = #{record.authorId,jdbcType=INTEGER},
-      type = #{record.type,jdbcType=VARCHAR},
-      status = #{record.status,jdbcType=VARCHAR},
-      tags = #{record.tags,jdbcType=VARCHAR},
-      categories = #{record.categories,jdbcType=VARCHAR},
-      hits = #{record.hits,jdbcType=INTEGER},
-      comments_num = #{record.commentsNum,jdbcType=INTEGER},
-      allow_comment = #{record.allowComment,jdbcType=BIT},
-      allow_ping = #{record.allowPing,jdbcType=BIT},
-      allow_feed = #{record.allowFeed,jdbcType=BIT},
-      content = #{record.content,jdbcType=LONGVARCHAR}
+    title = #{record.title,jdbcType=VARCHAR},
+    slug = #{record.slug,jdbcType=VARCHAR},
+    created = #{record.created,jdbcType=INTEGER},
+    modified = #{record.modified,jdbcType=INTEGER},
+    author_id = #{record.authorId,jdbcType=INTEGER},
+    type = #{record.type,jdbcType=VARCHAR},
+    status = #{record.status,jdbcType=VARCHAR},
+    tags = #{record.tags,jdbcType=VARCHAR},
+    categories = #{record.categories,jdbcType=VARCHAR},
+    hits = #{record.hits,jdbcType=INTEGER},
+    comments_num = #{record.commentsNum,jdbcType=INTEGER},
+    allow_comment = #{record.allowComment,jdbcType=BIT},
+    allow_ping = #{record.allowPing,jdbcType=BIT},
+    allow_feed = #{record.allowFeed,jdbcType=BIT},
+    content = #{record.content,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -346,20 +346,20 @@
   <update id="updateByExample" parameterType="map">
     update t_contents
     set cid = #{record.cid,jdbcType=INTEGER},
-      title = #{record.title,jdbcType=VARCHAR},
-      slug = #{record.slug,jdbcType=VARCHAR},
-      created = #{record.created,jdbcType=INTEGER},
-      modified = #{record.modified,jdbcType=INTEGER},
-      author_id = #{record.authorId,jdbcType=INTEGER},
-      type = #{record.type,jdbcType=VARCHAR},
-      status = #{record.status,jdbcType=VARCHAR},
-      tags = #{record.tags,jdbcType=VARCHAR},
-      categories = #{record.categories,jdbcType=VARCHAR},
-      hits = #{record.hits,jdbcType=INTEGER},
-      comments_num = #{record.commentsNum,jdbcType=INTEGER},
-      allow_comment = #{record.allowComment,jdbcType=BIT},
-      allow_ping = #{record.allowPing,jdbcType=BIT},
-      allow_feed = #{record.allowFeed,jdbcType=BIT}
+    title = #{record.title,jdbcType=VARCHAR},
+    slug = #{record.slug,jdbcType=VARCHAR},
+    created = #{record.created,jdbcType=INTEGER},
+    modified = #{record.modified,jdbcType=INTEGER},
+    author_id = #{record.authorId,jdbcType=INTEGER},
+    type = #{record.type,jdbcType=VARCHAR},
+    status = #{record.status,jdbcType=VARCHAR},
+    tags = #{record.tags,jdbcType=VARCHAR},
+    categories = #{record.categories,jdbcType=VARCHAR},
+    hits = #{record.hits,jdbcType=INTEGER},
+    comments_num = #{record.commentsNum,jdbcType=INTEGER},
+    allow_comment = #{record.allowComment,jdbcType=BIT},
+    allow_ping = #{record.allowPing,jdbcType=BIT},
+    allow_feed = #{record.allowFeed,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -418,38 +418,38 @@
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="springBoot.modal.vo.ContentVo">
     update t_contents
     set title = #{title,jdbcType=VARCHAR},
-      slug = #{slug,jdbcType=VARCHAR},
-      created = #{created,jdbcType=INTEGER},
-      modified = #{modified,jdbcType=INTEGER},
-      author_id = #{authorId,jdbcType=INTEGER},
-      type = #{type,jdbcType=VARCHAR},
-      status = #{status,jdbcType=VARCHAR},
-      tags = #{tags,jdbcType=VARCHAR},
-      categories = #{categories,jdbcType=VARCHAR},
-      hits = #{hits,jdbcType=INTEGER},
-      comments_num = #{commentsNum,jdbcType=INTEGER},
-      allow_comment = #{allowComment,jdbcType=BIT},
-      allow_ping = #{allowPing,jdbcType=BIT},
-      allow_feed = #{allowFeed,jdbcType=BIT},
-      content = #{content,jdbcType=LONGVARCHAR}
+    slug = #{slug,jdbcType=VARCHAR},
+    created = #{created,jdbcType=INTEGER},
+    modified = #{modified,jdbcType=INTEGER},
+    author_id = #{authorId,jdbcType=INTEGER},
+    type = #{type,jdbcType=VARCHAR},
+    status = #{status,jdbcType=VARCHAR},
+    tags = #{tags,jdbcType=VARCHAR},
+    categories = #{categories,jdbcType=VARCHAR},
+    hits = #{hits,jdbcType=INTEGER},
+    comments_num = #{commentsNum,jdbcType=INTEGER},
+    allow_comment = #{allowComment,jdbcType=BIT},
+    allow_ping = #{allowPing,jdbcType=BIT},
+    allow_feed = #{allowFeed,jdbcType=BIT},
+    content = #{content,jdbcType=LONGVARCHAR}
     where cid = #{cid,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="springBoot.modal.vo.ContentVo">
     update t_contents
     set title = #{title,jdbcType=VARCHAR},
-      slug = #{slug,jdbcType=VARCHAR},
-      created = #{created,jdbcType=INTEGER},
-      modified = #{modified,jdbcType=INTEGER},
-      author_id = #{authorId,jdbcType=INTEGER},
-      type = #{type,jdbcType=VARCHAR},
-      status = #{status,jdbcType=VARCHAR},
-      tags = #{tags,jdbcType=VARCHAR},
-      categories = #{categories,jdbcType=VARCHAR},
-      hits = #{hits,jdbcType=INTEGER},
-      comments_num = #{commentsNum,jdbcType=INTEGER},
-      allow_comment = #{allowComment,jdbcType=BIT},
-      allow_ping = #{allowPing,jdbcType=BIT},
-      allow_feed = #{allowFeed,jdbcType=BIT}
+    slug = #{slug,jdbcType=VARCHAR},
+    created = #{created,jdbcType=INTEGER},
+    modified = #{modified,jdbcType=INTEGER},
+    author_id = #{authorId,jdbcType=INTEGER},
+    type = #{type,jdbcType=VARCHAR},
+    status = #{status,jdbcType=VARCHAR},
+    tags = #{tags,jdbcType=VARCHAR},
+    categories = #{categories,jdbcType=VARCHAR},
+    hits = #{hits,jdbcType=INTEGER},
+    comments_num = #{commentsNum,jdbcType=INTEGER},
+    allow_comment = #{allowComment,jdbcType=BIT},
+    allow_ping = #{allowPing,jdbcType=BIT},
+    allow_feed = #{allowFeed,jdbcType=BIT}
     where cid = #{cid,jdbcType=INTEGER}
   </update>
 

@@ -71,7 +71,7 @@ public class ContentServcieImpl implements IContentService {
                 throw new TipException("您输入的路径不合法");
             }
             ContentVoExample contentVoExample = new ContentVoExample();
-            contentVoExample.createCriteria().andTypeEqualTo(contents.getType()).andStatusEqualTo(contents.getSlug());
+            contentVoExample.createCriteria().andTypeEqualTo(contents.getType()).andSlugEqualTo(contents.getSlug());
             long count = contentDao.countByExample(contentVoExample);
             if (count > 0) {
                 throw new TipException("该路径已经存在，请重新输入");
@@ -100,7 +100,7 @@ public class ContentServcieImpl implements IContentService {
     public PageInfo<ContentVo> getContents(Integer p, Integer limit) {
         ContentVoExample example = new ContentVoExample();
         example.setOrderByClause("created desc");
-        example.createCriteria().andTagsEqualTo(Types.ARTICLE.getType()).andStatusEqualTo(Types.PUBLISH.getType());
+        example.createCriteria().andTypeEqualTo(Types.ARTICLE.getType()).andStatusEqualTo(Types.PUBLISH.getType());
         PageHelper.startPage(p, limit);
         List<ContentVo> contentVoList = contentDao.selectByExampleWithBLOBs(example);
         PageInfo<ContentVo> pageInfo = new PageInfo<>(contentVoList);

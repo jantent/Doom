@@ -1,6 +1,9 @@
 package springBoot;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -19,6 +22,10 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import springBoot.config.HttpPortCfg;
@@ -79,17 +86,34 @@ public class CoreApplication {
                 context.addConstraint(securityConstraint);
             }
         };
-        tomcat.addAdditionalTomcatConnectors(httpConnector());
-        return tomcat;
-    }
 
-    @Bean
-    public Connector httpConnector() {
         Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
         connector.setScheme("http");
         connector.setPort(Integer.valueOf(httpPortCfg.getHttp_port()));
         connector.setSecure(false);
         connector.setRedirectPort(Integer.valueOf(httpPortCfg.getHttps_port()));
-        return connector;
+
+        tomcat.addAdditionalTomcatConnectors(connector);
+        return tomcat;
+    }
+
+    // redis配置
+    @Bean
+    public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
+        RedisTemplate<Object, Object> template = new RedisTemplate<>();
+        template.setConnectionFactory(redisConnectionFactory);
+        Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
+        //
+        ObjectMapper om = new ObjectMapper();
+        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+
+        jackson2JsonRedisSerializer.setObjectMapper(om);
+        // 1.设置值（value）的序列化采用Jackson2JsonRedisSerializer
+        template.setValueSerializer(jackson2JsonRedisSerializer);
+        // 2.设置键（key）的序列化采用StringRedisSerializer
+        template.setKeySerializer(new StringRedisSerializer());
+        template.afterPropertiesSet();
+        return template;
     }
 }

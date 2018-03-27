@@ -1,5 +1,7 @@
 package springBoot.service.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import springBoot.dao.OptionVoMapper;
 import springBoot.modal.vo.OptionVo;
@@ -11,7 +13,9 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class OptionServiceImpl implements IOptionService{
+public class OptionServiceImpl implements IOptionService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(OptionServiceImpl.class);
 
     @Resource
     private OptionVoMapper optionalDao;
@@ -23,19 +27,21 @@ public class OptionServiceImpl implements IOptionService{
 
     @Override
     public void insertOption(String name, String value) {
+        LOGGER.debug("Enter insertOption method:name={},value={}", name, value);
         OptionVo optionVo = new OptionVo();
         optionVo.setName(name);
         optionVo.setName(value);
-        if (optionalDao.selectByPrimaryKey(name)==null){
+        if (optionalDao.selectByPrimaryKey(name) == null) {
             optionalDao.insertSelective(optionVo);
-        }else {
+        } else {
             optionalDao.updateByPrimaryKeySelective(optionVo);
         }
+        LOGGER.debug("Exit insertOption method.");
     }
 
     @Override
     public List<OptionVo> getOptions() {
-     return optionalDao.selectByExample(new OptionVoExample());
+        return optionalDao.selectByExample(new OptionVoExample());
     }
 
     @Override

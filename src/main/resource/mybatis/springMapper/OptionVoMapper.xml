@@ -90,7 +90,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from t_options
     where name = #{name,jdbcType=VARCHAR}
@@ -107,9 +107,9 @@
   </delete>
   <insert id="insert" parameterType="springBoot.modal.vo.OptionVo">
     insert into t_options (name, value, description
-      )
+    )
     values (#{name,jdbcType=VARCHAR}, #{value,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}
-      )
+    )
   </insert>
   <insert id="insertSelective" parameterType="springBoot.modal.vo.OptionVo">
     insert into t_options
@@ -162,8 +162,8 @@
   <update id="updateByExample" parameterType="map">
     update t_options
     set name = #{record.name,jdbcType=VARCHAR},
-      value = #{record.value,jdbcType=VARCHAR},
-      description = #{record.description,jdbcType=VARCHAR}
+    value = #{record.value,jdbcType=VARCHAR},
+    description = #{record.description,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -183,11 +183,11 @@
   <update id="updateByPrimaryKey" parameterType="springBoot.modal.vo.OptionVo">
     update t_options
     set value = #{value,jdbcType=VARCHAR},
-      description = #{description,jdbcType=VARCHAR}
+    description = #{description,jdbcType=VARCHAR}
     where name = #{name,jdbcType=VARCHAR}
   </update>
 
-<!--批量保存-->
+  <!--批量保存-->
   <insert id="insertOptions" parameterType="springBoot.modal.vo.OptionVo" >
     INSERT INTO t_options(name, value, description) VALUES
     <if test="list.size!=0">

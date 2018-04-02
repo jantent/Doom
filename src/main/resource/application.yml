@@ -1,4 +1,8 @@
 server:
+  tomcat:
+    min-spare-threads: 20
+    max-threads: 100
+  connection-timeout: 5000
   port: 8443
   ssl:
     key-store: classpath:keystore.jks

@@ -7,7 +7,7 @@ import java.net.Socket;
 public class TimeServer {
 
 	public static void main(String args[]) throws IOException{
-		int port = 8080;
+		int port = 9818;
 		ServerSocket server = null;
 		try {
 			server = new ServerSocket(port);

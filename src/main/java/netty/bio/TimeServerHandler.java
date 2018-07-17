@@ -30,7 +30,7 @@ public class TimeServerHandler implements Runnable {
                     break;
                 System.out.println("the time server receive order :   " + body);
                 //设置查询命令
-                Thread.sleep(3500);
+                Thread.sleep(500);
                 currentTime = "QUERY TIME ORDER".equalsIgnoreCase(body) ? new Date(System.currentTimeMillis()).toString() : "BAD ORDER";
                 out.println(currentTime);
             }

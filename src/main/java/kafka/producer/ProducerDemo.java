@@ -14,7 +14,7 @@ import java.util.concurrent.Executors;
 public class ProducerDemo {
     static Properties properties = new Properties();
 
-    static String topic = "user";
+    static String topic = "consumer";
 
     static KafkaProducer<String, String> producer = null;
 

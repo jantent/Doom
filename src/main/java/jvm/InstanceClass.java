@@ -19,11 +19,8 @@ public class InstanceClass extends ParentClass{
     }
 
     public static void main(String args[]) throws InterruptedException {
-//        new InstanceClass();
-        String a = "";
-        System.out.println(a==null);
+        new InstanceClass();
     }
-
 }
 
 class ParentClass{

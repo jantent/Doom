@@ -3,6 +3,7 @@ package httpclient;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -20,8 +21,12 @@ public class HttpPostClient {
             .setConnectionRequestTimeout(15000).build();
 
     public static void main(String args[]) throws Exception{
-       applyTimeStamp();
-//    verifyTimeStamp();
+
+        String url = "http://127.0.0.1:3180/download/FIRSTCA.crl";
+        HttpPostClient postClient = new HttpPostClient();
+        String response = postClient.sendHttpGet(url);
+        System.out.println("响应为："+response);
+
     }
 
     public static void verifyTimeStamp() throws Exception{
@@ -41,7 +46,7 @@ public class HttpPostClient {
 
     public static void applyTimeStamp() throws Exception {
         HttpPostClient postClient = new HttpPostClient();
-        String httpUrl = "http://"+"192.168.109.69"+":4018";
+        String httpUrl = "http://"+"10.0.90.50"+":5860";
         TimeStampRequest request = new TimeStampRequest();
         request.setType("apply");
         String source = "测试一下";
@@ -103,5 +108,48 @@ public class HttpPostClient {
         }
     }
 
+
+    /**
+     * get
+     *
+     * @param httpUrl
+     * @return
+     */
+    @SuppressWarnings("unused")
+    private String sendHttpGet(String httpUrl) {
+        HttpGet httpGet = new HttpGet(httpUrl);
+        return sendGet(httpGet);
+    }
+
+    @SuppressWarnings("finally")
+    private String sendGet(HttpGet httpGet) {
+        CloseableHttpClient httpClient = null;
+        CloseableHttpResponse response = null;
+        HttpEntity entity = null;
+        String responseContent = null;
+        try {
+            // 创建默认的httpClient实例
+            httpClient = HttpClients.createDefault();
+            httpGet.setConfig(requestConfig);
+            // 执行请求
+            response = httpClient.execute(httpGet);
+            entity = response.getEntity();
+            responseContent = EntityUtils.toString(entity);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (response != null) {
+                    response.close();
+                }
+                if (httpClient != null) {
+                    httpClient.close();
+                }
+            } catch (IOException e2) {
+                e2.printStackTrace();
+            }
+            return responseContent;
+        }
+    }
 
 }

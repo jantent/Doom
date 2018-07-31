@@ -18,21 +18,16 @@ public class ProducerThread implements Runnable {
 
     @Override
     public void run() {
-
-        for (int i = 0; i < 100; i++) {
-
-            producer.send(record, (metadata, e) -> {
-                if (null != e) {
-                    e.printStackTrace();
-                }
-                if (null != metadata) {
-
-                    System.out.println(String.format("offset: %s, partition:%s, topic:%s  timestamp:%s",
-                            metadata.offset(), metadata.partition(), metadata.topic(), metadata.timestamp()));
-                }
-            });
-        }
-
+        producer.send(record, (metadata, e) -> {
+            if (null != e) {
+                e.printStackTrace();
+            }
+            if (null != metadata) {
+                System.out.println("发送成功 ：         "+String.format("offset: %s, partition:%s, topic:%s  timestamp:%s",
+                        metadata.offset(), metadata.partition(), metadata.topic(), metadata.timestamp()));
+            }
+        });
     }
+
 }
 

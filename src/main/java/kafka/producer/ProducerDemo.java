@@ -26,15 +26,11 @@ public class ProducerDemo {
     }
 
     public static void main(String args[]) throws Exception {
-        ExecutorService service = null;
-        try {
-            service = Executors.newFixedThreadPool(20);
-            ProducerRecord<String, String> record = null;
-            for (int i = 0; i < 1000; i++) {
-                record = new ProducerRecord<>(topic, i + "", "aaaaaaaaa" + i);
-                service.submit(new ProducerThread(producer, record));
-            }
-        }finally {
+        ExecutorService service = Executors.newFixedThreadPool(5);
+        ProducerRecord<String, String> record = null;
+        for (int i = 0; i < 6; i++) {
+            record = new ProducerRecord<>(topic, 0, System.currentTimeMillis(), i + "", "janti" + i);
+            service.submit(new ProducerThread(producer, record));
         }
 
     }
@@ -45,7 +41,7 @@ public class ProducerDemo {
 
             for (int i = 0; i < 100; i++) {
 
-                record = new ProducerRecord<String, String>(topic, i + "", "message" + i);
+                record = new ProducerRecord<String, String>(topic, 1, System.currentTimeMillis(), i + "", "message" + i);
                 producer.send(record, (metadata, e) -> {
                     if (null != e) {
                         e.printStackTrace();

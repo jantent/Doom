@@ -11,7 +11,7 @@ import java.util.Properties;
 public class ConsumerDemo {
     static Properties properties = new Properties();
 
-    private static String topic = "consumer";
+    private static String topic = "testpartition";
 
     private static long polltimeout = 1000;
 
@@ -26,8 +26,8 @@ public class ConsumerDemo {
         // 在没有指定消费偏移量提交方式时，默认是每个1s提交一次偏移量，可以通过auto.commit.interval.ms参数指定提交间隔
         // 自动提交要设置成false
         // 手动提交设置成true
-        properties.put("enable.auto.commit", false);
-//        properties.put("auto.commit.interval.ms", 1000);
+        properties.put("enable.auto.commit", true);
+        properties.put("auto.commit.interval.ms", 1000);
 
         // key序列化
         properties.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
@@ -38,9 +38,9 @@ public class ConsumerDemo {
     }
 
     public static void main(String args[]) {
-//        consumeAutoCommit();
+        consumeAutoCommit();
 //        consumeHandleCommit();
-        consumeByTimestamp();
+//        consumeByTimestamp();
     }
 
     public static void consumeHandleCommit() {
@@ -89,13 +89,12 @@ public class ConsumerDemo {
         kafkaConsumer.subscribe(Arrays.asList(topic));
 
         try {
-            for (; ; ) {
-                // 拉取消息
-                ConsumerRecords<String, String> records = kafkaConsumer.poll(polltimeout);
-                for (ConsumerRecord<String, String> record : records) {
-                    System.out.println("收到消息：          " + String.format("partition = %d, offset= %d, key=%s, value=%s%n",
-                            record.partition(), record.offset(), record.key(), record.value()));
-                }
+            // 拉取消息
+            ConsumerRecords<String, String> records = kafkaConsumer.poll(polltimeout);
+            for (ConsumerRecord<String, String> record : records) {
+                System.out.println("消息总数为：  "+records.count());
+                System.out.println("收到消息：          " + String.format("partition = %d, offset= %d, key=%s, value=%s%n",
+                        record.partition(), record.offset(), record.key(), record.value()));
             }
         } catch (Exception e) {
             e.printStackTrace();

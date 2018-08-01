@@ -16,7 +16,7 @@ import java.util.Properties;
 public class KafkaTopic {
 
     // 连接zk
-    private static final String ZK_CONNECT = "192.168.44.128:2181";
+    private static final String ZK_CONNECT = "10.0.90.53:2181";
 
     // session过期时间
     private static final int SEESSION_TIMEOUT = 30 * 1000;
@@ -25,8 +25,8 @@ public class KafkaTopic {
     private static final int CONNECT_TIMEOUT = 30 * 1000;
 
     public static void main(String args[]) {
-        String topic  = "janti";
-        createTopic(topic, 1, 1, new Properties());
+        String topic  = "testpartition";
+        createTopic(topic, 10, 1, new Properties());
         //searchTopic(topic);
 //        deleteTopic(topic);
 //        Properties props = new Properties();

@@ -5,6 +5,9 @@ import org.apache.kafka.common.Cluster;
 
 import java.util.Map;
 
+/**
+ * 自定义分区器
+ */
 public class PartitionUtil implements Partitioner {
 
     // 分区数
@@ -16,7 +19,7 @@ public class PartitionUtil implements Partitioner {
             return 0;
         }
         String keyValue = String.valueOf(key);
-
+        // key取模
         int partitionId = (int) (Long.valueOf(key.toString())%PARTITION_NUM);
         return partitionId;
     }

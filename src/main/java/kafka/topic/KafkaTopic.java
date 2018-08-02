@@ -15,7 +15,7 @@ import java.util.Properties;
  */
 public class KafkaTopic {
 
-    // 连接zk
+    // 连接配置
     private static final String ZK_CONNECT = "10.0.90.53:2181";
 
     // session过期时间
@@ -25,9 +25,9 @@ public class KafkaTopic {
     private static final int CONNECT_TIMEOUT = 30 * 1000;
 
     public static void main(String args[]) {
-        String topic  = "testpartition";
-        createTopic(topic, 10, 1, new Properties());
-        //searchTopic(topic);
+        String topic  = "MyOrder";
+        createTopic(topic, 6, 1, new Properties());
+//        searchTopic(topic);
 //        deleteTopic(topic);
 //        Properties props = new Properties();
 //        // 删除topic级别属性
@@ -39,14 +39,15 @@ public class KafkaTopic {
     /**
      * 创建主题
      *
-     * @param topic
-     * @param partition
-     * @param repilca
-     * @param properties
+     * @param topic 主题名称
+     * @param partition 分区数
+     * @param repilca 副本数
+     * @param properties 配置信息
      */
     public static void createTopic(String topic, int partition, int repilca, Properties properties) {
         ZkUtils zkUtils = null;
         try {
+            // 创建zkutil
             zkUtils = ZkUtils.apply(ZK_CONNECT, SEESSION_TIMEOUT, CONNECT_TIMEOUT, JaasUtils.isZkSecurityEnabled());
             if (!AdminUtils.topicExists(zkUtils, topic)) {
                 //主题不存在，则创建主题
@@ -82,6 +83,11 @@ public class KafkaTopic {
         }
     }
 
+    /**
+     * 删除主题
+     *
+     * @param topic
+     */
     public static void deleteTopic(String topic){
         ZkUtils zkUtils = null;
         try {

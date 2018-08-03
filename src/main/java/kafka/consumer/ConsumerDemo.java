@@ -11,7 +11,7 @@ import java.util.Properties;
 public class ConsumerDemo {
     static Properties properties = new Properties();
 
-    private static String topic = "testpartition";
+    private static String topic = "MyOrder";
 
     private static long polltimeout = 1000;
 
@@ -19,7 +19,7 @@ public class ConsumerDemo {
         // bootstarp server 地址
         properties.put("bootstrap.servers", "10.0.90.53:9092");
 //        //group.id指定消费者，所在的组
-        properties.put("group.id", "consumer");
+        properties.put("group.id", "order");
 //        //
         properties.put("client.id", "consumer");
 
@@ -27,7 +27,7 @@ public class ConsumerDemo {
         // 自动提交要设置成false
         // 手动提交设置成true
         properties.put("enable.auto.commit", true);
-        properties.put("auto.commit.interval.ms", 1000);
+        properties.put("auto.commit.interval.ms", 100000);
 
         // key序列化
         properties.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
@@ -89,12 +89,14 @@ public class ConsumerDemo {
         kafkaConsumer.subscribe(Arrays.asList(topic));
 
         try {
-            // 拉取消息
-            ConsumerRecords<String, String> records = kafkaConsumer.poll(polltimeout);
-            for (ConsumerRecord<String, String> record : records) {
-                System.out.println("消息总数为：  "+records.count());
-                System.out.println("收到消息：          " + String.format("partition = %d, offset= %d, key=%s, value=%s%n",
-                        record.partition(), record.offset(), record.key(), record.value()));
+            while (true) {
+                // 拉取消息
+                ConsumerRecords<String, String> records = kafkaConsumer.poll(polltimeout);
+                for (ConsumerRecord<String, String> record : records) {
+                    System.out.println("消息总数为：  " + records.count());
+                    System.out.println("收到消息：          " + String.format("partition = %d, offset= %d, key=%s, value=%s%n",
+                            record.partition(), record.offset(), record.key(), record.value()));
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

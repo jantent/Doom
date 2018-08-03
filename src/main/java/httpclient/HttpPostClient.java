@@ -22,9 +22,10 @@ public class HttpPostClient {
 
     public static void main(String args[]) throws Exception{
 
-        String url = "http://127.0.0.1:3180/download/FIRSTCA.crl";
+        String url = "https://yq.aliyun.com/articles/622406?spm=a2c4e.11155435.0.0.7b503312vdRApA";
         HttpPostClient postClient = new HttpPostClient();
         String response = postClient.sendHttpGet(url);
+
         System.out.println("响应为："+response);
 
     }

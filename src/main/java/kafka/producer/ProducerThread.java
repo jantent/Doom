@@ -23,7 +23,7 @@ public class ProducerThread implements Runnable {
                 e.printStackTrace();
             }
             if (null != metadata) {
-                System.out.println("发送成功 ：         "+String.format("offset: %s, partition:%s, topic:%s  timestamp:%s",
+                System.out.println("消息发送成功 ：         "+String.format("offset: %s, partition:%s, topic:%s  timestamp:%s",
                         metadata.offset(), metadata.partition(), metadata.topic(), metadata.timestamp()));
             }
         });

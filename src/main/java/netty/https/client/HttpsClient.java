@@ -1,61 +1,80 @@
-package httpclient;
+package netty.https.client;
 
+import httpclient.TimeStampRequest;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.config.Registry;
+import org.apache.http.config.RegistryBuilder;
+import org.apache.http.conn.socket.ConnectionSocketFactory;
+import org.apache.http.conn.socket.PlainConnectionSocketFactory;
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.conn.ssl.TrustStrategy;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.util.EntityUtils;
 import org.apache.tomcat.util.codec.binary.Base64;
 import springBoot.util.GsonUtils;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 
-public class HttpPostClient {
+public class HttpsClient {
     private RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(15000).setConnectTimeout(15000)
             .setConnectionRequestTimeout(15000).build();
+
+    private static final String HTTP = "http";
+    private static final String HTTPS = "https";
+    private static SSLConnectionSocketFactory sslsf = null;
+    private static PoolingHttpClientConnectionManager cm = null;
+    private static SSLContextBuilder builder = null;
+    static {
+        try {
+            builder = new SSLContextBuilder();
+            // 全部信任 不做身份鉴定
+            builder.loadTrustMaterial(null, new TrustStrategy() {
+                @Override
+                public boolean isTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
+                    return true;
+                }
+            });
+            sslsf = new SSLConnectionSocketFactory(builder.build(), new String[]{"SSLv2Hello", "SSLv3", "TLSv1", "TLSv1.2"}, null, NoopHostnameVerifier.INSTANCE);
+            Registry<ConnectionSocketFactory> registry = RegistryBuilder.<ConnectionSocketFactory>create()
+                    .register(HTTP, new PlainConnectionSocketFactory())
+                    .register(HTTPS, sslsf)
+                    .build();
+            cm = new PoolingHttpClientConnectionManager(registry);
+            cm.setMaxTotal(20);//max connection
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void main(String args[]) throws Exception{
 
         String url = "https://10.0.90.50:8780";
-        HttpPostClient postClient = new HttpPostClient();
-        String response = postClient.sendHttpGet(url);
+        HttpsClient postClient = new HttpsClient();
+        String response = postClient.sendHttpPost(url,"ajdh");
 
         System.out.println("响应为："+response);
 
     }
 
-    public static void verifyTimeStamp() throws Exception{
-        HttpPostClient postClient = new HttpPostClient();
-        String httpUrl = "http://"+"192.168.109.69"+":4018";
-        TimeStampRequest request = new TimeStampRequest();
-        request.setType("verify");
-        String source = "测试一下";
-        request.setSource(Base64.encodeBase64String(source.getBytes("utf-8")));
-        String timestamp = "MIIDFTADAgEAMIIDDAYJKoZIhvcNAQcCoIIC/TCCAvkCAQExCzAJBgUrDgMCGgUAMFYGCyqGSIb3DQEJEAEEoEcERTBDAgEBBgQqAwQBMCEwCQYFKw4DAhoFAAQUNIrandyZBKpyasPw/H+n89h1OdQCASAYDzIwMTgwNTAyMDQ0ODUzWgEBAKCCAVAwggFMMIHzoAMCAQICCBESIhARERERMAwGCCqBHM9VAYN1BQAwNDERMA8GA1UECAwIbnVsbFJvb3QxHzAdBgNVBAMMFuWPr+S/oeaXtumXtFNlcnZlckNlcnQwIBcNMTgwNDI1MjE1MjA5WhgPMjA2ODA0MjUyMTUyMDlaMCExHzAdBgNVBAMMFuWPr+S/oeaXtumXtFNlcnZlckNlcnQwWTATBgcqhkjOPQIBBggqgRzPVQGCLQNCAASGYxaGKHLJ0ADqSnrrLXbg+yLaPilsQkxxZBG0Y/VHgi5Qq6qqYl1/hHh+Qf+2AIFxZHhKeQ82zQNv7dN6r9qiMAoGCCqBHM9VAYN1A0gAMEUCIDu1T8isPysGuDx7GqxAU1ypmaYx3raLV8o8vOWB1NFRAiEAqd5hKOCxovwUQQhspD38l3uGXHXptnvn3ObInDew9XUxggE5MIIBNQIBATBAMDQxETAPBgNVBAgMCG51bGxSb290MR8wHQYDVQQDDBblj6/kv6Hml7bpl7RTZXJ2ZXJDZXJ0AggREiIQERERETAJBgUrDgMCGgUAoIGMMBoGCSqGSIb3DQEJAzENBgsqhkiG9w0BCRABBDAcBgkqhkiG9w0BCQUxDxcNMTgwNTAyMDQ0ODUzWjAjBgkqhkiG9w0BCQQxFgQU/Bi+oRt7yBa2AzDbKxH3c3IPvMAwKwYLKoZIhvcNAQkQAgwxHDAaMBgwFgQUgQUh1E0foVrccJW1eqbkRfYFJzAwDAYIKoEcz1UBg3UFAARGMEQCIA1/ijFT5LFTPk3mDKGGIAd1ees9boc5yD6l8059k/5rAiAwVRmbTRh5XEt/rjjRkL/qCtVTO2ZKdL9jXc6djNsD+w==";
-        request.setTimeStamp(timestamp);
-        String verifyresult = postClient.sendHttpPost(httpUrl, GsonUtils.toJsonString(request));
-        System.out.println("验证的返回结果是： "+verifyresult);
-    }
-
-
-
-    public static void applyTimeStamp() throws Exception {
-        HttpPostClient postClient = new HttpPostClient();
-        String httpUrl = "http://"+"10.0.90.50"+":5860";
-        TimeStampRequest request = new TimeStampRequest();
-        request.setType("apply");
-        String source = "测试一下";
-        request.setSource(Base64.encodeBase64String(source.getBytes("utf-8")));
-        System.out.println(GsonUtils.toJsonString(request));
-        String result =  postClient.sendHttpPost(httpUrl, GsonUtils.toJsonString(request));
-        System.out.println();
-        System.out.println("申请的结果为："+result);
+    public static CloseableHttpClient getHttpClient() throws Exception {
+        CloseableHttpClient httpClient = HttpClients.custom()
+                .setSSLSocketFactory(sslsf)
+                .setConnectionManager(cm)
+                .setConnectionManagerShared(true)
+                .build();
+        return httpClient;
     }
 
     /**
@@ -85,7 +104,7 @@ public class HttpPostClient {
 
         try {
             // 创建默认的httpClient实例
-            httpClient = HttpClients.createDefault();
+            httpClient = getHttpClient();
             httpPost.setConfig(requestConfig);
             // 执行请求
             response = httpClient.execute(httpPost);

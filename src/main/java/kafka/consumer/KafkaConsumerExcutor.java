@@ -18,11 +18,8 @@ public class KafkaConsumerExcutor {
 
         Map<String, Object> configMap = new HashMap<>();
         configMap.put("bootstrap.servers", "10.0.90.53:9092");
-        //group.id指定消费者，所在的组
+        //group.id指定消费者，所在的组,保证所有线程都在一个消费者组
         configMap.put("group.id", "test");
-//        //
-//        configMap.put("client.id", "consumer");
-
         configMap.put("enable.auto.commit", true);
         configMap.put("auto.commit.interval.ms", 1000);
 
@@ -32,10 +29,9 @@ public class KafkaConsumerExcutor {
         configMap.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
 
         ExecutorService service = Executors.newFixedThreadPool(6);
+        // 该主题总共有6个分区，那么保证6个线程
         for (int i = 0; i < 6; i++) {
             service.submit(new KafkaConsumerThread(configMap, topic));
         }
-
-
     }
 }

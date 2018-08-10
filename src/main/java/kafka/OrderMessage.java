@@ -1,5 +1,8 @@
 package kafka;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class OrderMessage {
 
     // 订单ID
@@ -54,5 +57,22 @@ public class OrderMessage {
                 ", createTime=" + createTime +
                 ", remake='" + remake + '\'' +
                 '}';
+    }
+
+
+    public static void main(String args[]){
+        OrderMessage orderMessageA = new OrderMessage();
+        orderMessageA.setsName("aaaa");
+        OrderMessage orderMessageB = new OrderMessage();
+        orderMessageB.setsName("BBBB");
+        Map<OrderMessage,String> hashMap = new HashMap<>();
+        hashMap.put(orderMessageA,orderMessageA.getsName());
+        hashMap.put(orderMessageB,orderMessageB.getsName());
+
+        System.out.println(orderMessageA.hashCode());
+        System.out.println(orderMessageB.hashCode());
+
+
+        System.out.println(hashMap.get(orderMessageB));
     }
 }

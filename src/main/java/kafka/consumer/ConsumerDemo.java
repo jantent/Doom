@@ -69,7 +69,7 @@ public class ConsumerDemo {
                             }
                         }
                     });
-                    count=0;
+                    count = 0;
                 }
             }
         } catch (Exception e) {

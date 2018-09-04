@@ -29,6 +29,11 @@ public class UserDaoTest {
     public UserDaoTest() throws IOException {
     }
 
+    public static void main(String args[]) throws Exception{
+        UserDaoTest userDaoTest =new UserDaoTest();
+        userDaoTest.testSelect();
+    }
+
     public void testSelect() throws Exception{
         SqlSession sqlSession = sqlSessionFactory.openSession();
         UserDao userDao = sqlSession.getMapper(UserDao.class);

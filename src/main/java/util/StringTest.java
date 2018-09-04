@@ -2,10 +2,12 @@ package util;
 
 public class StringTest {
     public static void main(String args[]) throws Exception {
-        String sql = "CREATE INDEX IDX_CLIENT_LOG ON TB_CLIENT_LOG(LOCAL_TIME)";
-        String tableName = "TB_CLIENT_LOG";
-        String newTableName = "TB_CLIENT_LOG_201803";
-        System.out.println(updateTableIndexName(sql,tableName,newTableName));
+//        String sql = "CREATE INDEX IDX_CLIENT_LOG ON TB_CLIENT_LOG(LOCAL_TIME)";
+//        String tableName = "TB_CLIENT_LOG";
+//        String newTableName = "TB_CLIENT_LOG_201803";
+//        System.out.println(updateTableIndexName(sql,tableName,newTableName));
+        System.out.println(3*31);
+
     }
 
     public static String updateTableIndexName(String sql, String tableName, String newTableName) throws Exception {

@@ -20,6 +20,7 @@ public class KafkaSimpleDemo {
     //poll超时时间
     private static long pollTimeout = 2000;
 
+    // 1.消费者配置
     static {
         // bootstarp server 地址
         properties.put("bootstrap.servers", "10.0.90.53:9092");
@@ -49,12 +50,15 @@ public class KafkaSimpleDemo {
      * 消费消息自动提交偏移值
      */
     public static void consumeAutoCommit() {
+        //2. 实例化消费者
         KafkaConsumer<String, String> kafkaConsumer = new KafkaConsumer<String, String>(properties);
+        // 3.订阅主题
         kafkaConsumer.subscribe(Arrays.asList(topic));
 
         try {
+            // 消费者是一个长期的过程，所以使用永久循环，
             while (true) {
-                // 拉取消息
+                // 4.拉取消息
                 ConsumerRecords<String, String> records = kafkaConsumer.poll(pollTimeout);
                 for (ConsumerRecord<String, String> record : records) {
                     System.out.println("消息总数为：  " + records.count());

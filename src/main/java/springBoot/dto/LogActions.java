@@ -21,6 +21,7 @@ public enum LogActions {
     }
 
     LogActions(String action) {
+
         this.action = action;
     }
 }

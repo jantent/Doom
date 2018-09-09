@@ -21,9 +21,10 @@ public class MyLogAspect {
     }
 
     @Before("pointCut()")
-    public void beforeMethod(JoinPoint joinPoint){
+    public void beforeMethod(JoinPoint joinPoint) throws Exception {
         String methodName = joinPoint.getSignature().getName();
         System.out.println("before method:   "+methodName+" time :"+System.currentTimeMillis());
+        throw new Exception("没有权限");
     }
 
     @AfterReturning("pointCut()")
